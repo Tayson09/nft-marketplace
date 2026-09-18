@@ -4,7 +4,7 @@ React + TypeScript frontend challenge implementation focused on the required fun
 
 ## Stack
 
-React 19, TypeScript, Vite, TanStack Router, TanStack Query, Axios, MSW, Socket.IO client, Tailwind CSS, shadcn-style primitives/Radix UI, React Hook Form/Zod-ready validation, Playwright and Lighthouse.
+React 19, TypeScript, Vite, TanStack Router, TanStack Query, Axios, MSW, Socket.IO client, Tailwind CSS, shadcn-style primitives/Radix UI, Typed form validation, Playwright and Lighthouse.
 
 ## Demo credentials
 
@@ -41,7 +41,7 @@ npm run lighthouse
 
 The REST layer exposes the reset endpoint `POST /api/__scenario/reset`. Core handlers simulate success, 4xx/5xx errors, variable latency, session expiration, invalid coupon, conflicts, stale quotes, duplicated order submissions through idempotency, payment rejection and pending recovery.
 
-The Socket.IO scenario emits `nft.updated` after 18 seconds in the browser mock. The client orders events by `version` and ignores stale/duplicate updates. `order.updated` is handled by invalidating the active order query.
+The browser mock emits `nft.updated` after approximately 18 seconds in normal development. During Playwright E2E runs (`VITE_E2E=true`), the scenario is accelerated to approximately 1.5 seconds. The client accepts only strictly newer event versions and ignores stale or duplicated events.
 
 Use the in-app **Mock scenario** selector to switch between Normal, Slow network and Offline. The selector persists locally and is attached to Axios requests as `x-mock-scenario`. `POST /api/__scenario/reset` restores the mock catalog/account scenario.
 
