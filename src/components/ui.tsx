@@ -1,0 +1,18 @@
+import {forwardRef,type ButtonHTMLAttributes, type HTMLAttributes, type InputHTMLAttributes, type ReactNode} from 'react'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
+import {Slot} from '@radix-ui/react-slot'
+import {cn} from '../lib/cn'
+
+export const Button=forwardRef<HTMLButtonElement,ButtonHTMLAttributes<HTMLButtonElement>&{asChild?:boolean;variant?:'primary'|'secondary'|'ghost'|'outline';size?:'sm'|'md'|'lg'}>(({className,variant='primary',size='md',asChild=false,...props},ref)=>{const C=asChild?Slot:'button';return <C ref={ref} className={cn('inline-flex items-center justify-center gap-2 rounded-full font-semibold transition active:scale-[.98] disabled:pointer-events-none disabled:opacity-50',variant==='primary'&&'bg-[#d88a42] text-[#170e09] hover:bg-[#eb9d53]',variant==='secondary'&&'bg-[#d88a42] text-[#170e09] hover:bg-[#eb9d53]',variant==='ghost'&&'text-[#a99282] hover:bg-[#24130d] hover:text-[#f5e9df]',variant==='outline'&&'border border-[#55301f] bg-[#1b0f0b] text-[#e6d5c7] hover:border-[#8d552c]',size==='sm'&&'h-9 px-4 text-xs',size==='md'&&'h-11 px-5 text-sm',size==='lg'&&'h-13 px-7 text-base',className)} {...props}/>} )
+Button.displayName='Button'
+export const Input=forwardRef<HTMLInputElement,InputHTMLAttributes<HTMLInputElement>>(({className,...props},ref)=><input ref={ref} className={cn('h-11 w-full rounded-[2px] border border-[#4a291b] bg-[#170d09] px-4 text-sm text-[#f2e4d7] placeholder:text-[#72594b] focus:border-[#995c2b] focus:bg-[#1b100c]',className)} {...props}/>)
+Input.displayName='Input'
+export function Card({className,...props}:HTMLAttributes<HTMLDivElement>){return <div className={cn('rounded-[2px] border border-[#3b2116] bg-[#1a0f0b] shadow-none',className)} {...props}/>} 
+export function Badge({children,muted=false}:{children:ReactNode;muted?:boolean}){return <span className={cn('inline-flex border px-2 py-1 text-[9px] font-medium uppercase tracking-[.12em]',muted?'border-[#4a291b] text-[#8b6e5c]':'border-[#7f4a25] bg-[#4c2a19] text-[#e8a05c]')}>{children}</span>}
+export const Separator=({className}:{className?:string})=><div className={cn('h-px w-full bg-[#332016]',className)}/>
+export const Dialog=DialogPrimitive.Root
+export const DialogTrigger=DialogPrimitive.Trigger
+export const DialogContent=({className,children,...props}:DialogPrimitive.DialogContentProps)=> <DialogPrimitive.Portal><DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm"/><DialogPrimitive.Content className={cn('fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[2px] border border-[#50301f] bg-[#1a0f0b] p-6 shadow-2xl',className)} {...props}>{children}<DialogPrimitive.Close className="absolute right-4 top-4 rounded-full p-2 text-zinc-500 hover:bg-white/10 hover:text-white" aria-label="Fechar">×</DialogPrimitive.Close></DialogPrimitive.Content></DialogPrimitive.Portal>
+export const DialogTitle=DialogPrimitive.Title
+export function Skeleton({className}:{className?:string}){return <div className={cn('animate-pulse rounded-[2px] bg-[#2b1912] [background-image:linear-gradient(90deg,transparent,rgba(216,138,66,.12),transparent)] [background-size:200%_100%]',className)}/>} 
+export function EmptyState({title,description,action}:{title:string;description:string;action?:ReactNode}){return <Card className="flex min-h-64 flex-col items-center justify-center p-8 text-center"><div className="mb-4 h-12 w-12 rounded-2xl bg-white/5"/><h3 className="text-lg font-semibold">{title}</h3><p className="mt-2 max-w-sm text-sm text-zinc-500">{description}</p>{action&&<div className="mt-6">{action}</div>}</Card>}
